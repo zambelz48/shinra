@@ -1,0 +1,20 @@
+ext {
+    project_info = [
+            group: "com.travlr.mobile",
+            name: "shinra",
+            ios_lib_name: "Shinra",
+            desc: "Http networking library for Android & iOS",
+            owner_url: "https://github.com/travlrcom/shinra",
+            license_name: "The Apache Software License, Version 2.0",
+            license_url: "http://www.apache.org/licenses/LICENSE-2.0.txt",
+            license_dist: "repo",
+            developer_id: "TRAVLR",
+            developer_name: "TRAVLR Mobile Team",
+            developer_organization: "TRAVLR",
+            developer_organization_url: "https://github.com/travlrcom",
+            scm: "https://github.com/travlrcom/shinra.git",
+    ]
+    excluded_packages = [
+            "Kotlin/Native"
+    ]
+}

@@ -1,0 +1,66 @@
+
+buildscript {
+
+    apply from: 'gradle/info.gradle'
+    def excluded_packages = rootProject.excluded_packages
+
+    repositories {
+        mavenLocal {
+            content {
+                excluded_packages.each {
+                    excludeGroup(it)
+                }
+            }
+        }
+        mavenCentral {
+            content {
+                excluded_packages.each {
+                    excludeGroup(it)
+                }
+            }
+        }
+        jcenter {
+            content {
+                excluded_packages.each {
+                    excludeGroup(it)
+                }
+            }
+        }
+        google {
+            content {
+                excluded_packages.each {
+                    excludeGroup(it)
+                }
+            }
+        }
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:3.5.4")
+        classpath("org.jetbrains.dokka:dokka-gradle-plugin:0.10.1")
+        classpath("com.travlr.mobile:kirintools:0.0.1")
+    }
+}
+
+plugins {
+    id "org.jetbrains.kotlin.multiplatform" version "1.4.20"
+    id "org.jetbrains.kotlin.plugin.serialization" version "1.4.20"
+    id "org.jetbrains.dokka"
+    id "kotlin-android-extensions"
+    id "com.android.library"
+}
+
+apply plugin: "kirin.tools.project-versioning"
+apply plugin: "kirin.tools.custom-test-logger"
+projectVersionConfig {
+    versionFilePath = "version.properties"
+}
+
+apply from: "gradle/repositories.gradle"
+apply from: "gradle/dependencies.gradle"
+apply from: "gradle/multiplatform.gradle"
+apply from: "gradle/android.gradle"
+apply from: "gradle/tasks.gradle"
+apply from: "gradle/publishing.gradle"
+
+configurations.create("compileClasspath")

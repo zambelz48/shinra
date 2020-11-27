@@ -1,0 +1,75 @@
+kotlin {
+    targets {
+
+        targetFromPreset(presets["android"], "android") {
+            publishLibraryVariants("release", "debug")
+        }
+
+        def isBuildForDevice = project.findProperty("device") as Boolean
+        def iOSTarget = isBuildForDevice ? iosArm64("ios") : iosX64("ios")
+        def iOSPreset = iOSTarget.preset
+
+        targetFromPreset(iOSPreset, "ios") {
+            ios {
+                binaries {
+                    framework {
+                        apply from: "gradle/info.gradle"
+
+                        if (!isBuildForDevice) {
+                            embedBitcode("disable")
+                        }
+
+                        freeCompilerArgs = freeCompilerArgs + "-Xobjc-generics"
+
+                        baseName = rootProject.project_info.ios_lib_name
+                    }
+                }
+            }
+        }
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                rootProject.common_main_dependencies.each {
+                    switch (it.type) {
+                        case "implementation":
+                            //noinspection GroovyAssignabilityCheck
+                            implementation it.lib
+                            break
+                    }
+                }
+            }
+        }
+        commonTest {
+            dependencies {
+                rootProject.common_test_dependencies.each {
+                    switch (it.type) {
+                        case "implementation":
+                            //noinspection GroovyAssignabilityCheck
+                            implementation it.lib
+                            break
+                    }
+                }
+            }
+        }
+
+        iosMain {
+            dependencies {
+                rootProject.ios_main_dependencies.each {
+                    switch (it.type) {
+                        case "implementation":
+                            //noinspection GroovyAssignabilityCheck
+                            implementation it.lib
+                            break
+                    }
+                }
+            }
+        }
+        iosTest {
+            dependencies {
+
+            }
+        }
+    }
+}

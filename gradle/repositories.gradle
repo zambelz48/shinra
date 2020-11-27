@@ -1,0 +1,34 @@
+repositories {
+
+    apply from: "gradle/info.gradle"
+    def excluded_packages = rootProject.excluded_packages
+
+    mavenLocal {
+        content {
+            excluded_packages.each {
+                excludeGroup(it)
+            }
+        }
+    }
+    mavenCentral {
+        content {
+            excluded_packages.each {
+                excludeGroup(it)
+            }
+        }
+    }
+    jcenter {
+        content {
+            excluded_packages.each {
+                excludeGroup(it)
+            }
+        }
+    }
+    google {
+        content {
+            excluded_packages.each {
+                excludeGroup(it)
+            }
+        }
+    }
+}

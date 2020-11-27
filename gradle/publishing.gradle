@@ -1,0 +1,56 @@
+
+apply plugin: "maven-publish"
+
+apply from: "gradle/info.gradle"
+
+def project_info = rootProject.project_info
+
+group = project_info.group
+version = projectVersionConfig.name()
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/travlrcom/mobile-http-networking")
+            credentials {
+                apply from: "gradle/helpers.gradle"
+                def account = rootProject.getGithubAccount()
+                username = account.username
+                password = account.token
+            }
+        }
+    }
+    publications {
+        all {
+            if (it.name == "metadata") {
+                artifactId "${project_info.name}-common"
+            }
+        }
+        kotlinMultiplatform(MavenPublication) {
+            pom {
+                artifactId project_info.name
+                description project_info.desc
+                url = project_info.owner_url
+                licenses {
+                    license {
+                        name = project_info.license_name
+                        url = project_info.license_url
+                        distribution = project_info.license_dist
+                    }
+                }
+                developers {
+                    developer {
+                        id = project_info.developer_id
+                        name = project_info.developer_name
+                        organization = project_info.developer_organization
+                        organizationUrl = project_info.developer_organization_url
+                    }
+                }
+                scm {
+                    url = project_info.scm
+                }
+            }
+        }
+    }
+}

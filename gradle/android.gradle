@@ -1,0 +1,70 @@
+
+def compatibleJavaVersion = JavaVersion.VERSION_1_8
+def excludesInPackaging = [
+        "ETA-INF/DEPENDENCIES",
+        "META-INF/LICENSE",
+        "META-INF/LICENSE.txt",
+        "META-INF/license.txt",
+        "META-INF/NOTICE",
+        "META-INF/NOTICE.txt",
+        "META-INF/notice.txt",
+        "META-INF/ASL2.0",
+        "META-INF/kotlinx-coroutines-core.kotlin_module",
+        "META-INF/ktor-http.kotlin_module",
+        "META-INF/ktor-utils.kotlin_module",
+        "META-INF/ktor-io.kotlin_module",
+        "META-INF/ktor-http-cio.kotlin_module",
+        "META-INF/ktor-client-json.kotlin_module",
+        "META-INF/ktor-client-core.kotlin_module"
+]
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode = projectVersionConfig.code()
+        versionName = projectVersionConfig.name()
+    }
+    sourceSets.main {
+        def androidMainDir = "src/androidMain"
+        manifest.srcFile "$androidMainDir/resources/AndroidManifest.xml"
+        java.srcDirs = ["$androidMainDir/kotlin"]
+        res.srcDirs = ["$androidMainDir/resources"]
+    }
+    sourceSets.test {
+        def androidTestDir = "src/androidTest"
+        java.srcDirs = ["$androidTestDir/kotlin"]
+        res.srcDirs = ["$androidTestDir/resources"]
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility = compatibleJavaVersion
+        targetCompatibility = compatibleJavaVersion
+    }
+    kotlinOptions {
+        java {
+            targetCompatibility = compatibleJavaVersion
+        }
+    }
+    packagingOptions {
+        excludesInPackaging.each {
+            exclude it
+        }
+    }
+}
+
+dependencies {
+    rootProject.android_main_dependencies.each {
+        //noinspection GroovyAssignabilityCheck
+        add(it.type, it.lib)
+    }
+}

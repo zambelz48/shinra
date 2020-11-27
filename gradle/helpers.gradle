@@ -1,0 +1,15 @@
+
+ext {
+    // TODO: Is this approach correct? revisit here later on
+    getGithubAccount = {
+        File accountFile = new File("accounts.properties")
+        FileInputStream fileInputStream = new FileInputStream(accountFile)
+        Properties props = new Properties()
+        props.load(fileInputStream)
+
+        return [
+                username: props["githubUsername"],
+                token: props["githubPAT"]
+        ]
+    }
+}
