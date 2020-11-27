@@ -28,10 +28,10 @@ ext {
     ]
 
     common_main_dependencies = [
-            implement("org.jetbrains.kotlin:kotlin-stdlib-common:${ext.lib_version.kotlin}"),
             implement("org.jetbrains.kotlinx:kotlinx-coroutines-core:${ext.lib_version.kotlin_coroutines}"),
             implement("org.jetbrains.kotlinx:kotlinx-serialization-json:${ext.lib_version.kotlin_serialization}"),
             implement("io.ktor:ktor-client-core:${ext.lib_version.ktor}"),
+            implement("io.ktor:ktor-client-serialization:${ext.lib_version.ktor}"),
             implement("io.ktor:ktor-client-mock:${ext.lib_version.ktor}")
     ]
 
@@ -41,7 +41,6 @@ ext {
     ]
 
     android_main_dependencies = [
-            implement("org.jetbrains.kotlin:kotlin-stdlib-jdk8"),
             implement("org.jetbrains.kotlinx:kotlinx-coroutines-android:${ext.lib_version.kotlin_coroutines}"),
             implement("org.jetbrains.kotlinx:kotlinx-serialization-json:${ext.lib_version.kotlin_serialization}"),
             implement("io.ktor:ktor-client-android:${ext.lib_version.ktor}"),
@@ -57,8 +56,6 @@ ext {
     ios_main_dependencies = [
             implement("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.8"),
             implement("org.jetbrains.kotlinx:kotlinx-serialization-json:${ext.lib_version.kotlin_serialization}"),
-            implement("io.ktor:ktor-client-ios:${ext.lib_version.ktor}"),
-            implement("io.ktor:ktor-client-serialization-native:1.3.2-1.4-M1-2"),
-            implement("io.ktor:ktor-client-mock-native:1.3.2-1.4-M1-2")
+            implement("io.ktor:ktor-client-ios:${ext.lib_version.ktor}")
     ]
 }
